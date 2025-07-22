@@ -8,7 +8,7 @@ require('dotenv').config();
 
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 4000;
 
 // Middleware para parsear JSON
 app.use(express.json());
@@ -28,7 +28,7 @@ const getConnection = async () => {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    port: process.env.PORT
+    port: process.env.DB_PORT
   });
 };
 
