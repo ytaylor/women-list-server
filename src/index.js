@@ -5,7 +5,7 @@ const express = require('express');
 const mysql = require('mysql2/promise');
 const cors = require('cors');
 require('dotenv').config();
-const { getConnection, listWomen } = require('./lib/db');
+//const { getConnection, listWomen } = require('./lib/db');
 
 
 const app = express();
