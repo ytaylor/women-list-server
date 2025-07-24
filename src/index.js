@@ -149,14 +149,29 @@ app.post('/api/women', async (req, res) => {
       [full_name, birth_date, death_date, bio, country_id, field_id, photo_url]
     );
 
+    const woman_id = result.insertId;
+
+    // 4. Insertar logros (achievements)
+    for (const ach of achievements) {
+      const { title, description, year } = ach;
+      if (title) {
+        await connection.query(
+          `
+          INSERT INTO achievements (woman_id, title, description, year)
+          VALUES (?, ?, ?, ?)
+          `,
+          [woman_id, title, description || '', year || null]
+        );
+      }
+    }
+
     connection.end();
 
     res.status(201).json({
       success: true,
-      message: 'Mujer insertada',
-      id: result.insertId
+      message: 'Mujer y logros insertados correctamente',
+      id: woman_id
     });
-
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: 'Error del servidor' });
